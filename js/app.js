@@ -1,31 +1,44 @@
-var ViewModel = function() {
+var Cat = function() {
 	this.clickCount = ko.observable(0);
 	this.name = ko.observable('Tabby');
-	this.level = ko.observable('Kitten');
 	this.imgSrc = ko.observable('img/cat1.jpg');
+	this.nicknames = ko.observableArray(['Mr. T', 'Tabs', 'Tabtab']);
 
+	this.level = ko.computed(function() {
+		var level;
+		var clicks = this.clickCount();
+
+		if (clicks < 6) {
+			level = 'Kitten';
+		}
+
+		else if (clicks < 24) {
+			level = 'Junior';
+		}
+
+		else if (clicks < 84) {
+			level = 'Prime';
+		}
+
+		else if (clicks < 120) {
+			level = 'Mature';
+		}
+
+		else if (clicks < 168) {
+			level = 'Senior';
+		}
+
+		else {
+			level = 'Geriatric';
+		}
+		return level;
+	}, this);
+}
+
+
+var ViewModel = function() {
 	this.incrementCounter = function() {
 		this.clickCount(this.clickCount() + 1);
-
-		if (this.clickCount() >= 6) {
-			this.level('Junior');
-		}
-
-		else if (this.clickCount() >= 24) {
-			this.level('Prime');
-		}
-
-		else if (this.clickCount() >= 84) {
-			this.level('Mature');
-		}
-
-		else if (this.clickCount() >= 120) {
-			this.level('Senior');
-		}
-
-		else if (this.clickCount() >= 168) {
-			this.level('Geriatric');
-		}
 	};
 }
 
